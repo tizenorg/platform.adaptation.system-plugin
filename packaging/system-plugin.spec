@@ -22,6 +22,14 @@ Requires: %{name} = %{version}-%{release}
 %description u3
 This package provides U3/XU3 specific system configuration files.
 
+%package exynos
+Summary:  Exynos specific system configuration files
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-u3 = %{version}-%{release}
+
+%description exynos
+This package provides Exynos specific system configuration files.
+
 %prep
 %setup -q
 
@@ -29,6 +37,9 @@ This package provides U3/XU3 specific system configuration files.
 cp %{SOURCE1} .
 
 %install
+# Copy whole fs files to buildroot
+cp -rf fs/* %{buildroot}
+
 mkdir -p %{buildroot}%{_unitdir}
 install -m 644 units/resize2fs@.service %{buildroot}%{_unitdir}
 
@@ -52,3 +63,6 @@ systemctl daemon-reload
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-user.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
 
+%files exynos
+%manifest %{name}.manifest
+%{_libdir}/udev/rules.d/51-system-plugin-exynos.rules
