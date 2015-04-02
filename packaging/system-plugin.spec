@@ -18,9 +18,17 @@ This package provides target specific system configuration files.
 %package u3
 Summary:  U3/XU3 specific system configuration files
 Requires: %{name} = %{version}-%{release}
+Requires: %{name}-exynos = %{version}-%{release}
 
 %description u3
 This package provides U3/XU3 specific system configuration files.
+
+%package exynos
+Summary:  Exynos specific system configuration files
+Requires: %{name} = %{version}-%{release}
+
+%description exynos
+This package provides Exynos specific system configuration files.
 
 %prep
 %setup -q
@@ -38,6 +46,9 @@ ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-user.service
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-rootfs.service
 
+mkdir -p %{buildroot}%{_libdir}/udev/rules.d/
+install -m 644 rules/51-system-plugin-exynos.rules %{buildroot}%{_libdir}/udev/rules.d/
+
 %post
 systemctl daemon-reload
 
@@ -52,3 +63,6 @@ systemctl daemon-reload
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-user.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
 
+%files exynos
+%manifest %{name}.manifest
+%{_libdir}/udev/rules.d/51-system-plugin-exynos.rules

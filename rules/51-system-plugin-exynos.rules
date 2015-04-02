@@ -1,0 +1,8 @@
+ACTION!="add", GOTO="system_plugin_end"
+
+# graphics
+KERNEL=="mali*", GROUP="video", SECLABEL{smack}="*"
+KERNEL=="tgl", GROUP="video", SECLABEL{smack}="*"
+KERNEL=="slp_global_lock", GROUP="video", SECLABEL{smack}="*"
+
+LABEL="system_plugin_end"
