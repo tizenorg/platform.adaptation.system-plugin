@@ -42,12 +42,14 @@ cp -rf fs/* %{buildroot}
 
 mkdir -p %{buildroot}%{_unitdir}
 install -m 644 units/resize2fs@.service %{buildroot}%{_unitdir}
+install -m 644 units/tizen-system-env.service %{buildroot}%{_unitdir}
 
 # Resize partition for 3-parted target
 mkdir -p %{buildroot}%{_unitdir}/basic.target.wants
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-system\\x2ddata.service
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-user.service
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-rootfs.service
+ln -s ../tizen-system-env.service %{buildroot}%{_unitdir}/basic.target.wants/tizen-system-env.service
 
 %post
 systemctl daemon-reload
@@ -56,6 +58,8 @@ systemctl daemon-reload
 %manifest %{name}.manifest
 %license LICENSE.Apache-2.0
 %{_unitdir}/resize2fs@.service
+%{_unitdir}/tizen-system-env.service
+%{_unitdir}/basic.target.wants/tizen-system-env.service
 
 %files u3
 %manifest %{name}.manifest
