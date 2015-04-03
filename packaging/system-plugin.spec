@@ -23,6 +23,14 @@ Requires: %{name}-exynos = %{version}-%{release}
 %description u3
 This package provides U3/XU3 specific system configuration files.
 
+%package n4
+Summary:  Note4 specific system configuration files
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-exynos = %{version}-%{release}
+
+%description n4
+This package provides Note4 specific system configuration files.
+
 %package exynos
 Summary:  Exynos specific system configuration files
 Requires: %{name} = %{version}-%{release}
@@ -66,6 +74,9 @@ systemctl daemon-reload
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-system\x2ddata.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-user.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
+
+%files n4
+%manifest %{name}.manifest
 
 %files exynos
 %manifest %{name}.manifest
