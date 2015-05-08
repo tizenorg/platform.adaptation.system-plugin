@@ -56,8 +56,8 @@ ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-rootfs.service
 ln -s ../tizen-system-env.service %{buildroot}%{_unitdir}/basic.target.wants/tizen-system-env.service
 
-mkdir -p %{buildroot}%{_libdir}/udev/rules.d/
-install -m 644 rules/51-system-plugin-exynos.rules %{buildroot}%{_libdir}/udev/rules.d/
+mkdir -p %{buildroot}%{_prefix}/lib/udev/rules.d/
+install -m 644 rules/51-system-plugin-exynos.rules %{buildroot}%{_prefix}/lib/udev/rules.d/
 
 %post
 systemctl daemon-reload
@@ -80,4 +80,4 @@ systemctl daemon-reload
 
 %files exynos
 %manifest %{name}.manifest
-%{_libdir}/udev/rules.d/51-system-plugin-exynos.rules
+%{_prefix}/lib/udev/rules.d/51-system-plugin-exynos.rules
