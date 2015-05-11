@@ -77,6 +77,9 @@ systemctl daemon-reload
 
 %files n4
 %manifest %{name}.manifest
+%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-system\x2ddata.service
+%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-user.service
+%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
 
 %files exynos
 %manifest %{name}.manifest
