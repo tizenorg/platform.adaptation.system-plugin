@@ -1,0 +1,17 @@
+ACTION!="add", GOTO="devices_end"
+
+KERNEL=="null|zero|full|random|urandom|uinput", SECLABEL{smack}="*"
+
+KERNEL=="umts_csd", GROUP="video", SECLABEL{smack}="*"
+KERNEL=="media[0-9]", MODE="0664", GROUP="video", SECLABEL{smack}="*"
+
+KERNEL=="event*", SYMLINK+="%k"
+
+KERNEL=="samsung_sdb", SECLABEL{smack}="*"
+
+# Marvell
+KERNEL=="uio[0-9]", MODE="0666", SECLABEL{smack}="*"
+
+KERNEL=="mobicore-user", SECLABEL{smack}="*"
+
+LABEL="devices_end"

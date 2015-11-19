@@ -38,6 +38,13 @@ Requires: %{name} = %{version}-%{release}
 %description exynos
 This package provides Exynos specific system configuration files.
 
+%package spreadtrum
+Summary:  Spreadtrum specific system configuration files
+Requires: %{name} = %{version}-%{release}
+
+%description spreadtrum
+This package provides Spreadtrum specific system configuration files.
+
 %prep
 %setup -q
 
@@ -58,6 +65,7 @@ ln -s ../tizen-system-env.service %{buildroot}%{_unitdir}/basic.target.wants/tiz
 
 mkdir -p %{buildroot}%{_prefix}/lib/udev/rules.d/
 install -m 644 rules/51-system-plugin-exynos.rules %{buildroot}%{_prefix}/lib/udev/rules.d/
+install -m 644 rules/51-system-plugin-spreadtrum.rules %{buildroot}%{_prefix}/lib/udev/rules.d/
 
 # fstab
 mkdir -p %{buildroot}%{_sysconfdir}
@@ -90,3 +98,9 @@ systemctl daemon-reload
 %files exynos
 %manifest %{name}.manifest
 %{_prefix}/lib/udev/rules.d/51-system-plugin-exynos.rules
+
+%files spreadtrum
+%manifest %{name}.manifest
+%{_prefix}/lib/udev/rules.d/51-system-plugin-spreadtrum.rules
+%{_unitdir}/tizen-system-env.service
+%{_unitdir}/basic.target.wants/tizen-system-env.service
