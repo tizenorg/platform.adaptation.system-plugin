@@ -103,4 +103,5 @@ systemctl daemon-reload
 %manifest %{name}.manifest
 %{_prefix}/lib/udev/rules.d/51-system-plugin-spreadtrum.rules
 %{_unitdir}/tizen-system-env.service
+%{_sysconfdir}/fstab
 %{_unitdir}/basic.target.wants/tizen-system-env.service
