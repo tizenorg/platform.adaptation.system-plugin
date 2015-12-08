@@ -105,3 +105,6 @@ systemctl daemon-reload
 %{_unitdir}/tizen-system-env.service
 %{_sysconfdir}/fstab
 %{_unitdir}/basic.target.wants/tizen-system-env.service
+%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-system\x2ddata.service
+%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-user.service
+%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
