@@ -53,8 +53,14 @@ cp %{SOURCE1} .
 
 %install
 mkdir -p %{buildroot}%{_unitdir}
+mkdir -p %{buildroot}/csa
 install -m 644 units/resize2fs@.service %{buildroot}%{_unitdir}
 install -m 644 units/tizen-system-env.service %{buildroot}%{_unitdir}
+
+# csa mount
+install -m 644 units/csa.mount %{buildroot}%{_unitdir}
+mkdir -p %{buildroot}%{_unitdir}/local-fs.target.wants
+ln -s ../csa.mount %{buildroot}%{_unitdir}/local-fs.target.wants/csa.mount
 
 # Resize partition for 3-parted target
 mkdir -p %{buildroot}%{_unitdir}/basic.target.wants
@@ -101,6 +107,7 @@ systemctl daemon-reload
 
 %files spreadtrum
 %manifest %{name}.manifest
+/csa
 %{_prefix}/lib/udev/rules.d/51-system-plugin-spreadtrum.rules
 %{_unitdir}/tizen-system-env.service
 %{_sysconfdir}/fstab
@@ -108,3 +115,5 @@ systemctl daemon-reload
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-system\x2ddata.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-user.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
+%{_unitdir}/csa.mount
+%{_unitdir}/local-fs.target.wants/csa.mount

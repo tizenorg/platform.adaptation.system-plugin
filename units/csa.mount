@@ -1,0 +1,10 @@
+[Unit]
+DefaultDependencies=no
+Before=local-fs.target
+After=local-fs-pre.target
+
+[Mount]
+What=/dev/disk/by-partlabel/csa
+Where=/csa
+Type=ext4
+Options=data=journal,nosuid
