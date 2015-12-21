@@ -1,5 +1,8 @@
 ACTION!="add", GOTO="devices_end"
 
+# audio
+KERNEL=="ion", GROUP="users", SECLABEL{smack}="*", MODE="0660"
+
 KERNEL=="null|zero|full|random|urandom|uinput", SECLABEL{smack}="*"
 
 KERNEL=="umts_csd", GROUP="video", SECLABEL{smack}="*"
