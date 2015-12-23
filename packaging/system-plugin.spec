@@ -54,6 +54,7 @@ cp %{SOURCE1} .
 %install
 mkdir -p %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}/csa
+mkdir -p %{buildroot}/initrd
 install -m 644 units/resize2fs@.service %{buildroot}%{_unitdir}
 install -m 644 units/tizen-system-env.service %{buildroot}%{_unitdir}
 
@@ -107,6 +108,7 @@ systemctl daemon-reload
 
 %files spreadtrum
 %manifest %{name}.manifest
+/initrd
 /csa
 %{_prefix}/lib/udev/rules.d/51-system-plugin-spreadtrum.rules
 %{_unitdir}/tizen-system-env.service
