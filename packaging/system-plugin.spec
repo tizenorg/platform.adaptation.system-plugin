@@ -10,7 +10,7 @@ License:   Apache-2.0
 Source0:   %{name}-%{version}.tar.bz2
 Source1:   %{name}.manifest
 
-Requires(post): systemd
+Requires(post): /usr/bin/systemctl
 
 %description
 This package provides target specific system configuration files.
