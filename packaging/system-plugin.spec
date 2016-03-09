@@ -45,6 +45,13 @@ Requires: %{name} = %{version}-%{release}
 %description spreadtrum
 This package provides Spreadtrum specific system configuration files.
 
+%package circle
+Summary:  Circle specific system configuration files
+Requires: %{name} = %{version}-%{release}
+
+%description circle
+This package provides Circle specific system configuration files.
+
 %prep
 %setup -q
 
@@ -105,6 +112,10 @@ systemctl daemon-reload
 %files exynos
 %manifest %{name}.manifest
 %{_prefix}/lib/udev/rules.d/51-system-plugin-exynos.rules
+
+%files circle
+%manifest %{name}.manifest
+/initrd
 
 %files spreadtrum
 %manifest %{name}.manifest
