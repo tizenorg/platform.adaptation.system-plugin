@@ -75,6 +75,9 @@ mkdir -p %{buildroot}%{_unitdir}/basic.target.wants
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-system\\x2ddata.service
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-user.service
 ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dlabel-rootfs.service
+# ugly temporary patch for initrd wearable
+ln -s ../resize2fs@.service %{buildroot}%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\\x2dpartlabel-user.service
+
 ln -s ../tizen-system-env.service %{buildroot}%{_unitdir}/basic.target.wants/tizen-system-env.service
 
 mkdir -p %{buildroot}%{_prefix}/lib/udev/rules.d/
@@ -84,6 +87,8 @@ install -m 644 rules/51-system-plugin-spreadtrum.rules %{buildroot}%{_prefix}/li
 # fstab
 mkdir -p %{buildroot}%{_sysconfdir}
 install -m 644 etc/fstab %{buildroot}%{_sysconfdir}
+# ugly temporary patch for initrd wearable
+install -m 644 etc/fstab_initrd %{buildroot}%{_sysconfdir}
 
 %post
 systemctl daemon-reload
@@ -116,6 +121,13 @@ systemctl daemon-reload
 %files circle
 %manifest %{name}.manifest
 /initrd
+%{_sysconfdir}/fstab_initrd
+%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dpartlabel-user.service
+
+# ugly temporary patch for initrd wearable
+%post circle
+rm %{_sysconfdir}/fstab
+mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
 
 %files spreadtrum
 %manifest %{name}.manifest
