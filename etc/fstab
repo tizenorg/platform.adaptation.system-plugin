@@ -2,3 +2,4 @@
 /dev/root       /               ext4    defaults,noatime 0      1
 LABEL=system-data /opt          ext4    defaults,noatime 0      2
 LABEL=user      /opt/usr        ext4    defaults,noatime 0      2
+/opt/home      /home            none    bind             0      0
