@@ -121,8 +121,11 @@ systemctl daemon-reload
 %files circle
 %manifest %{name}.manifest
 /initrd
+/csa
 %{_sysconfdir}/fstab_initrd
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dpartlabel-user.service
+%{_unitdir}/csa.mount
+%{_unitdir}/local-fs.target.wants/csa.mount
 
 # ugly temporary patch for initrd wearable
 %post circle
