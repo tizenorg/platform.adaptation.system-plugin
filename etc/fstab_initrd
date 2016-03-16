@@ -3,4 +3,4 @@
 # Basically, initrd should consider this issue.
 # <file system> <mount point>   <type>  <options>        <dump> <pass>
 /dev/root       /               ext4    defaults,noatime 0      1
-PARTLABEL=user  /opt/usr        ext4    defaults,noatime 0      2
+PARTLABEL=user  /opt            ext4    defaults,noatime 0      2
