@@ -1,0 +1,10 @@
+[Unit]
+Description=Unmount opt
+DefaultDependencies=no
+Before=local-fs-pre.target local-fs.target shutdown.target
+Requires=local-fs-pre.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/umount /opt
