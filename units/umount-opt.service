@@ -1,6 +1,7 @@
 [Unit]
 Description=Unmount opt
 DefaultDependencies=no
+ConditionPathIsMountPoint=/opt
 Before=local-fs-pre.target local-fs.target shutdown.target
 Requires=local-fs-pre.target
 
