@@ -143,7 +143,7 @@ mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
 # fstab for tm1
 %post spreadtrum
 rm %{_sysconfdir}/fstab
-mv %{_sysconfdir}/fstab_tm1 %{_sysconfdir}/fstab
+mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
 
 %files spreadtrum
 %manifest %{name}.manifest
@@ -158,3 +158,4 @@ mv %{_sysconfdir}/fstab_tm1 %{_sysconfdir}/fstab
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
 %{_unitdir}/csa.mount
 %{_unitdir}/local-fs.target.wants/csa.mount
+%{_unitdir}/local-fs-pre.target.wants/umount-opt.service
