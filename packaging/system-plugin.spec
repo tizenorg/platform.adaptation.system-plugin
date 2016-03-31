@@ -151,8 +151,7 @@ mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
 %{_unitdir}/tizen-system-env.service
 %{_sysconfdir}/fstab_initrd
 %{_unitdir}/basic.target.wants/tizen-system-env.service
-%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-system\x2ddata.service
-%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-user.service
+%{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dpartlabel-user.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
 %{_unitdir}/csa.mount
 %{_unitdir}/local-fs.target.wants/csa.mount
