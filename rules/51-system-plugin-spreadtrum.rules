@@ -11,7 +11,7 @@ KERNEL=="media[0-9]", MODE="0664", GROUP="video", SECLABEL{smack}="*"
 
 KERNEL=="event*", SYMLINK+="%k"
 
-KERNEL=="samsung_sdb", SECLABEL{smack}="*"
+KERNEL=="samsung_sdb", OWNER="sdk", GROUP="sdk", SECLABEL{smack}="*"
 
 # Marvell
 KERNEL=="uio[0-9]", MODE="0666", SECLABEL{smack}="*"
