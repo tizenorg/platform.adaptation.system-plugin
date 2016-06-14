@@ -138,10 +138,6 @@ systemctl daemon-reload
 %post circle
 rm %{_sysconfdir}/fstab
 mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
-# fstab for tm1
-%post spreadtrum
-rm %{_sysconfdir}/fstab
-mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
 
 %files spreadtrum
 %manifest %{name}.manifest
@@ -149,7 +145,7 @@ mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
 /csa
 %{_prefix}/lib/udev/rules.d/51-system-plugin-spreadtrum.rules
 %{_unitdir}/tizen-system-env.service
-%{_sysconfdir}/fstab_initrd
+%{_sysconfdir}/fstab
 %{_unitdir}/basic.target.wants/tizen-system-env.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dpartlabel-user.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
