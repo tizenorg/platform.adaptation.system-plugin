@@ -8,4 +8,4 @@ Requires=local-fs-pre.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/bin/umount /opt
+ExecStart=/bin/umount -l /opt
