@@ -1,0 +1,5 @@
+[Unit]
+Description=Timer for tizen-fstrim
+
+[Timer]
+OnCalendar=*-*-* 06:00:00

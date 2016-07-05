@@ -95,6 +95,14 @@ install -m 644 etc/fstab %{buildroot}%{_sysconfdir}
 # ugly temporary patch for initrd wearable
 install -m 644 etc/fstab_initrd %{buildroot}%{_sysconfdir}
 
+# fstrim
+mkdir -p %{buildroot}%{_unitdir}/graphical.target.wants
+install -m 644 units/tizen-fstrim-user.timer %{buildroot}%{_unitdir}
+ln -s ../tizen-fstrim-user.timer %{buildroot}%{_unitdir}/graphical.target.wants/tizen-fstrim-user.timer
+install -m 644 units/tizen-fstrim-user.service %{buildroot}%{_unitdir}
+mkdir -p %{buildroot}%{_bindir}
+install -m 755 scripts/tizen-fstrim-on-charge.sh %{buildroot}%{_bindir}
+
 %post
 systemctl daemon-reload
 
@@ -118,6 +126,10 @@ systemctl daemon-reload
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-user.service
 %{_unitdir}/basic.target.wants/resize2fs@dev-disk-by\x2dlabel-rootfs.service
 %{_sysconfdir}/fstab
+%{_unitdir}/graphical.target.wants/tizen-fstrim-user.timer
+%{_unitdir}/tizen-fstrim-user.timer
+%{_unitdir}/tizen-fstrim-user.service
+%{_bindir}/tizen-fstrim-on-charge.sh
 
 %files exynos
 %manifest %{name}.manifest
@@ -157,3 +169,7 @@ mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
 %{_unitdir}/local-fs.target.wants/csa.mount
 %{_unitdir}/umount-opt.service
 %{_unitdir}/local-fs-pre.target.wants/umount-opt.service
+%{_unitdir}/graphical.target.wants/tizen-fstrim-user.timer
+%{_unitdir}/tizen-fstrim-user.timer
+%{_unitdir}/tizen-fstrim-user.service
+%{_bindir}/tizen-fstrim-on-charge.sh
