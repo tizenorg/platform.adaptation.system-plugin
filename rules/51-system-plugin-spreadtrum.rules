@@ -2,7 +2,7 @@ ACTION!="add", GOTO="devices_end"
 
 # audio
 SUBSYSTEM=="spipe", KERNEL=="stty_td[0-9]*|stty_w[0-9]*|spipe_td[0-9]*|spipe_w[0-9]*", GROUP="audio", SECLABEL{smack}="*", MODE="0660"
-KERNEL=="ion", GROUP="users", SECLABEL{smack}="*", MODE="0660"
+KERNEL=="ion", GROUP="audio", SECLABEL{smack}="*", MODE="0660"
 
 KERNEL=="null|zero|full|random|urandom|uinput", SECLABEL{smack}="*"
 
