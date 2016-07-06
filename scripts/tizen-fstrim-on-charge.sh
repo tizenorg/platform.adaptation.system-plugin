@@ -1,5 +1,7 @@
 #!/bin/sh
 
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
 if [ "$#" -ne 1 ];then
 	echo "Argument was missed."
 	exit 1
