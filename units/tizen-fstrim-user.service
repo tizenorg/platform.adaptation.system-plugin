@@ -4,6 +4,7 @@ Requires=opt.mount
 
 [Service]
 Type=oneshot
+SmackProcessLabel=System
 ExecStart=/usr/bin/tizen-fstrim-on-charge.sh /opt
 StandardOutput=journal
 StandardError=inherit

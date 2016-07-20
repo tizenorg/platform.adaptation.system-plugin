@@ -8,4 +8,5 @@ Requires=local-fs-pre.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
+SmackProcessLabel=System
 ExecStart=/bin/umount -l /opt
