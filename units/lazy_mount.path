@@ -1,0 +1,5 @@
+[Unit]
+Description=Path activator of lazy mount service
+
+[Path]
+PathExists=/tmp/.lazy_mount
