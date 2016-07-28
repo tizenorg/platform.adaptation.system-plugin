@@ -1,16 +1,19 @@
-%define debug_package %{nil}
+#%define _unpackaged_files_terminate_build 0
+#%define debug_package %{nil}
 
 Name:      system-plugin
 Summary:   Target specific system configuration files
 Version:   0.1
 Release:   1
-Group:     System/Configuration
-BuildArch: noarch
+Group: Base/Startup
 License:   Apache-2.0
 Source0:   %{name}-%{version}.tar.bz2
 Source1:   %{name}.manifest
+Source2:   liblazymount.manifest
 
 Requires(post): /usr/bin/systemctl
+Requires(post): /usr/bin/vconftool
+BuildRequires: pkgconfig(vconf)
 
 %description
 This package provides target specific system configuration files.
@@ -19,6 +22,7 @@ This package provides target specific system configuration files.
 Summary:  U3/XU3 specific system configuration files
 Requires: %{name} = %{version}-%{release}
 Requires: %{name}-exynos = %{version}-%{release}
+BuildArch: noarch
 
 %description u3
 This package provides U3/XU3 specific system configuration files.
@@ -27,6 +31,7 @@ This package provides U3/XU3 specific system configuration files.
 Summary:  Note4 specific system configuration files
 Requires: %{name} = %{version}-%{release}
 Requires: %{name}-exynos = %{version}-%{release}
+BuildArch: noarch
 
 %description n4
 This package provides Note4 specific system configuration files.
@@ -34,6 +39,7 @@ This package provides Note4 specific system configuration files.
 %package exynos
 Summary:  Exynos specific system configuration files
 Requires: %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description exynos
 This package provides Exynos specific system configuration files.
@@ -41,6 +47,7 @@ This package provides Exynos specific system configuration files.
 %package spreadtrum
 Summary:  Spreadtrum specific system configuration files
 Requires: %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description spreadtrum
 This package provides Spreadtrum specific system configuration files.
@@ -48,17 +55,50 @@ This package provides Spreadtrum specific system configuration files.
 %package circle
 Summary:  Circle specific system configuration files
 Requires: %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description circle
 This package provides Circle specific system configuration files.
+
+%package -n liblazymount
+Summary: Library for lazy mount feature
+License: Apache-2.0
+Requires: vconf
+Requires: liblazymount = %{version}
+
+
+%description -n liblazymount
+Library for lazy mount feature. It supports some interface functions.
+
+%package -n liblazymount-devel
+Summary: Development library for lazy mount feature
+License:  Apache-2.0
+Requires: vconf
+Requires: liblazymount = %{version}
+
+%description -n liblazymount-devel
+Development library for lazy mount feature.It supports some interface functions.
 
 %prep
 %setup -q
 
 %build
 cp %{SOURCE1} .
+cp %{SOURCE2} .
+
+./autogen.sh
+%reconfigure \
+		--disable-static \
+		--prefix=%{_prefix} \
+		--disable-debug-mode \
+		--disable-eng-mode
+
+%__make %{?jobs:-j%jobs}
 
 %install
+rm -rf %{buildroot}
+%make_install
+
 mkdir -p %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}/csa
 mkdir -p %{buildroot}/initrd
@@ -103,8 +143,18 @@ install -m 644 units/tizen-fstrim-user.service %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 scripts/tizen-fstrim-on-charge.sh %{buildroot}%{_bindir}
 
+%clean
+rm -rf %{buildroot}
+
 %post
 systemctl daemon-reload
+
+%post -n liblazymount
+/sbin/ldconfig
+/usr/bin/vconftool set -f -t int db/system/lazy_mount_show_ui 1
+systemctl daemon-reload
+
+%postun -n liblazymount  -p /sbin/ldconfig
 
 %files
 %manifest %{name}.manifest
@@ -173,3 +223,20 @@ mv %{_sysconfdir}/fstab_initrd %{_sysconfdir}/fstab
 %{_unitdir}/tizen-fstrim-user.timer
 %{_unitdir}/tizen-fstrim-user.service
 %{_bindir}/tizen-fstrim-on-charge.sh
+
+%files -n liblazymount
+%defattr(-,root,root,-)
+%{_libdir}/liblazymount.so.*
+%manifest liblazymount.manifest
+%{_unitdir}/basic.target.wants/lazy_mount.path
+%{_unitdir}/lazy_mount.path
+%{_unitdir}/lazy_mount.service
+
+%files -n liblazymount-devel
+%defattr(-,root,root,-)
+%manifest liblazymount.manifest
+%{_libdir}/liblazymount.so
+%{_includedir}/lazymount/lazy_mount.h
+%{_libdir}/pkgconfig/liblazymount.pc
+%{_bindir}/test_lazymount
+
