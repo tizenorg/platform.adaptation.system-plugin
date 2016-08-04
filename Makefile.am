@@ -140,7 +140,8 @@ liblazymount_la_CFLAGS = \
 	$(LIBLAZYMOUNT_PC_CFLAGS)
 
 liblazymount_la_LIBADD = \
-	$(LIBLAZYMOUNT_PC_LIBS)
+	-L$(prefix)/lib \
+	-lvconf
 
 noinst_liblazymount_la_SOURCES = \
 	src/liblazymount/lazy_mount.h \
